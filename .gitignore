@@ -1,0 +1,29 @@
+# Node.js
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+.env
+.env.*.local
+*.local
+
+# Vite
+.vite/
+*.log
+
+# macOS
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
+
+# Optional: OS/Editor swap files
+*.swp
+*.swo
+
+# Coverage
+coverage/

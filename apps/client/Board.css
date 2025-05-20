@@ -1,0 +1,31 @@
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  width: 550px;
+  height: 550px;
+  background: #f0f0f0;
+  margin: auto;
+  position: relative;
+  border: 2px solid #333;
+}
+.tile {
+  border: 1px solid #ccc;
+  background: white;
+  position: relative;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2px;
+  height: 100%;
+}
+.tile-players {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  font-size: 16px;
+}
+.token {
+  transition: transform 0.3s;
+}
