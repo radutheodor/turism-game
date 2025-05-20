@@ -2,7 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node-dev index.ts"
+    "dev": "ts-node-dev index.ts",
+    "build-server": "tsc -p apps/server/tsconfig.json",
+    "start-server": "node apps/server/dist/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
