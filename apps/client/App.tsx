@@ -5,7 +5,8 @@ import './Board.css';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+let socket: Socket<DefaultEventsMap, ListenEvents>;
+socket = io(import.meta.env.VITE_BACKEND_URL);
 const tokenEmojis = ['🚗', '🧢', '🐧', '🧀', '🧛', '🐶'];
 
 function App() {
