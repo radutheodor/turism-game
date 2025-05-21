@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: turism-server
+    env: node
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    rootDir: apps/server
+    plan: free
+    envVars:
+      - key: PORT
+        value: 3001
+
+  - type: web
+    name: turism-client
+    runtime: static
+    buildCommand: pnpm install && pnpm build
+    staticPublishPath: dist
+    rootDir: apps/client
+    envVars:
+      - key: VITE_BACKEND_URL
+        value: https://turism-server.onrender.com
