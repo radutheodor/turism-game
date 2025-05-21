@@ -16,7 +16,6 @@ services:
     buildCommand: pnpm install && pnpm build
     staticPublishPath: dist
     rootDir: apps/client
-    plan: free
     envVars:
       - key: VITE_BACKEND_URL
         value: https://turism-server.onrender.com
