@@ -10,8 +10,9 @@ services:
       - key: PORT
         value: 3001
 
-  - type: static_site
+  - type: web
     name: turism-client
+    runtime: static
     buildCommand: pnpm install && pnpm build
     staticPublishPath: dist
     rootDir: apps/client
