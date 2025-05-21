@@ -30,7 +30,7 @@ const Dice: React.FC<DiceProps> = ({ onRollComplete, disabled }) => {
   return (
     <div className="flex flex-col items-center space-y-2">
       <img
-        src={`./assets/dice${value}.svg`}
+        src={`./public/dice${value}.svg`}
         alt={`dice ${value}`}
         className={`w-16 h-16 transition-transform duration-500 ${rolling ? 'rotate-180 scale-125' : ''}`}
       />
