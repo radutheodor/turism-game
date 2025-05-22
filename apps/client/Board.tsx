@@ -1,7 +1,7 @@
 import React from 'react';
 import './Board.css';
-
-const TILE_COUNT = 40;
+import { tiles } from './tileData';
+import { tileLayout } from './tileLayout';
 
 type Player = {
   id: string;
@@ -14,36 +14,41 @@ interface BoardProps {
   players: Player[];
 }
 
-const getTileCoordinates = (index: number): { x: number; y: number } => {
-  if (index <= 10) return { x: 10 - index, y: 10 };
-  if (index <= 20) return { x: 0, y: 20 - index };
-  if (index <= 30) return { x: index - 20, y: 0 };
-  return { x: 10, y: index - 30 };
-};
-
 export default function Board({ players }: BoardProps) {
-  const tiles = Array.from({ length: TILE_COUNT }, (_, i) => {
-    const playersOnTile = players.filter(p => p.position === i);
-    const { x, y } = getTileCoordinates(i);
+  return (
+    <div className="board-grid">
+      {tiles.map((tile) => {
+        const layout = tileLayout.find((t) => t.id === tile.id);
+        if (!layout) return null;
 
-    return (
-      <div
-        key={i}
-        className="tile"
-        style={{
-          gridColumnStart: x + 1,
-          gridRowStart: y + 1,
-        }}
-      >
-        <div className="tile-index">{i}</div>
-        <div className="tile-players">
-          {playersOnTile.map((p) => (
-            <span key={p.id} className="token">{p.avatar}</span>
-          ))}
-        </div>
-      </div>
-    );
-  });
+        const playersOnTile = players.filter((p) => p.position === tile.id);
+        const isCorner = [0, 10, 20, 30].includes(tile.id);
+        const isVertical = (tile.id > 10 && tile.id < 20) || tile.id > 30;
 
-  return <div className="board-grid">{tiles}</div>;
+        const style = {
+          gridColumnStart: layout.x,
+          gridRowStart: layout.y,
+          backgroundColor: tile.color || 'white',
+          width: isCorner ? '120px' : isVertical ? '120px' : '60px',
+          height: isCorner ? '120px' : isVertical ? '60px' : '120px',
+        };
+
+        return (
+          <div key={tile.id} className="tile" style={style}>
+            <div className="tile-name text-[8px] text-center">{tile.name}</div>
+            <div className="tile-players">
+              {playersOnTile.map((p) => (
+                <span key={p.id} className="token">
+                  {p.avatar}
+                </span>
+              ))}
+            </div>
+            {tile.owner && (
+              <div className="tile-owner text-[7px] text-black">🎖 {tile.owner.slice(0, 5)}</div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }

@@ -1,24 +1,19 @@
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(11, 1fr);
-  grid-template-rows: repeat(11, 1fr);
-  width: 550px;
-  height: 550px;
-  background: #f0f0f0;
+  grid-template-columns: repeat(13, 60px);
+  grid-template-rows: repeat(13, 60px);
   margin: auto;
   position: relative;
-  border: 2px solid #333;
+  background: #f8f8f8;
 }
 .tile {
   border: 1px solid #ccc;
-  background: white;
   position: relative;
   font-size: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 2px;
-  height: 100%;
 }
 .tile-players {
   display: flex;
