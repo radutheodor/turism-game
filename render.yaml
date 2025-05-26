@@ -2,6 +2,7 @@ services:
   - type: web
     name: turism-server
     env: node
+    autoDeployTrigger: commit
     buildCommand: pnpm install && pnpm build
     startCommand: pnpm start
     rootDir: apps/server
@@ -13,6 +14,7 @@ services:
   - type: web
     name: turism-client
     runtime: static
+    autoDeployTrigger: commit
     buildCommand: pnpm install && pnpm build
     staticPublishPath: dist
     rootDir: apps/client

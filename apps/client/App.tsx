@@ -76,13 +76,9 @@ function App() {
       )}
 
       {me && (
-        <Dice onRollComplete={handleRollComplete} />
-        /*        <Dice
-          onRollComplete={(total) => {
-            console.log('You rolled:', total);
-            socket.emit('rollDice', total);
-          }}
-        />*/
+        <div className="flex justify-center my-4">
+          <Dice onRollComplete={handleRollComplete} />
+        </div>
       )}
 
       {/* Add the board here */}

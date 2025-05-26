@@ -1,24 +1,53 @@
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(11, 1fr);
-  grid-template-rows: repeat(11, 1fr);
-  width: 550px;
-  height: 550px;
-  background: #f0f0f0;
+  grid-template-columns: repeat(13, 60px);
+  grid-template-rows: repeat(13, 60px);
   margin: auto;
   position: relative;
-  border: 2px solid #333;
+  background: #f8f8f8;
 }
 .tile {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
-  background: white;
-  position: relative;
   font-size: 10px;
+  padding: 0;
+  overflow: hidden;
+}
+.tile-top {
+  height: 40%;
+  width: 100%;
+}
+
+.tile-top.vertical {
+  width: 40%;
+  height: 100%;
+}
+
+.tile-bottom {
+  background: white;
+  padding: 0.5px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2px;
-  height: 100%;
+}
+
+.tile-name {
+  font-size: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tile-name.rotate {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.tile-image {
+  width: 100%;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 2px;
 }
 .tile-players {
   display: flex;
@@ -27,5 +56,6 @@
   font-size: 16px;
 }
 .token {
+  font-size: 32px;
   transition: transform 0.3s;
 }
