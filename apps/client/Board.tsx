@@ -24,6 +24,7 @@ export default function Board({ players }: BoardProps) {
         const playersOnTile = players.filter((p) => p.position === tile.id);
         const isCorner = [0, 10, 20, 30].includes(tile.id);
         const isVertical = (tile.id > 10 && tile.id < 20) || tile.id > 30;
+        const flexDirection = isVertical ? 'row' : 'column';
 
         const style = {
           gridColumnStart: layout.x,
@@ -34,18 +35,38 @@ export default function Board({ players }: BoardProps) {
         };
 
         return (
-          <div key={tile.id} className="tile" style={style}>
-            <div className="tile-name text-[8px] text-center">{tile.name}</div>
-            <div className="tile-players">
-              {playersOnTile.map((p) => (
-                <span key={p.id} className="token">
-                  {p.avatar}
-                </span>
-              ))}
-            </div>
-            {tile.owner && (
-              <div className="tile-owner text-[7px] text-black">🎖 {tile.owner.slice(0, 5)}</div>
+          <div
+            className="tile"
+            style={{
+              ...style,
+              display: 'flex',
+              flexDirection: flexDirection,
+              overflow: 'hidden',
+            }}
+          >
+            {tile.image ? (
+              <img
+                src={tile.image}
+                className={`tile-top ${isVertical ? 'vertical' : ''}`}
+                alt={tile.name}
+              />
+            ) : (
+              <div
+                className={`tile-top ${isVertical ? 'vertical' : ''}`}
+                style={{ backgroundColor: tile.color }}
+              />
             )}
+            <div className="tile-bottom">
+              <div className={`tile-name ${isVertical ? 'rotate' : ''}`}>{tile.name}</div>
+              <div className="tile-players">
+                {playersOnTile.map((p) => (
+                  <span key={p.id} className="token">
+                    {p.avatar}
+                  </span>
+                ))}
+              </div>
+              {tile.owner && <div className="tile-owner">🎖 {tile.owner.slice(0, 5)}</div>}
+            </div>
           </div>
         );
       })}

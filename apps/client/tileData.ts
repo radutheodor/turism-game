@@ -1,4 +1,15 @@
-export type TileType = 'property' | 'chance' | 'start' | 'jail' | 'tax' | 'parking';
+export type TileType =
+  | 'property'
+  | 'surpriza'
+  | 'statie'
+  | 'parcare'
+  | 'semafor'
+  | 'cfr'
+  | 'pod'
+  | 'gradina'
+  | 'camping'
+  | 'han'
+  | 'start';
 
 export interface Tile {
   id: number;
@@ -6,47 +17,239 @@ export interface Tile {
   type: TileType;
   color?: string; // Only for properties
   price?: number;
+  image?: string; // Only for properties
 }
 
 export const tiles: Tile[] = [
   { id: 0, name: 'Start', type: 'start' },
-  { id: 1, name: 'București', type: 'property', color: 'blue', price: 60 },
-  { id: 2, name: 'Constanța', type: 'property', color: 'blue', price: 60 },
-  { id: 3, name: 'Taxă', type: 'tax' },
-  { id: 4, name: 'Sinaia', type: 'property', color: 'lightblue', price: 100 },
-  { id: 5, name: 'Poiana Brașov', type: 'property', color: 'lightblue', price: 100 },
-  { id: 6, name: 'Cluj-Napoca', type: 'property', color: 'green', price: 120 },
-  { id: 7, name: 'Brașov', type: 'property', color: 'green', price: 140 },
-  { id: 8, name: 'Oradea', type: 'property', color: 'green', price: 140 },
-  { id: 9, name: 'Arad', type: 'property', color: 'yellow', price: 160 },
-  { id: 10, name: 'Închisoare', type: 'jail' },
-  { id: 11, name: 'Timișoara', type: 'property', color: 'orange', price: 180 },
-  { id: 12, name: 'Iași', type: 'property', color: 'orange', price: 180 },
-  { id: 13, name: 'Bacău', type: 'property', color: 'orange', price: 200 },
-  { id: 14, name: 'Ploiești', type: 'property', color: 'red', price: 220 },
-  { id: 15, name: 'Gara Nord', type: 'property', color: 'black', price: 240 },
-  { id: 16, name: 'Zalău', type: 'property', color: 'red', price: 240 },
-  { id: 17, name: 'Turda', type: 'property', color: 'red', price: 260 },
-  { id: 18, name: 'Sibiu', type: 'property', color: 'purple', price: 280 },
-  { id: 19, name: 'Târgoviște', type: 'property', color: 'purple', price: 280 },
-  { id: 20, name: 'Parcare', type: 'parking' },
-  { id: 21, name: 'Giurgiu', type: 'property', color: 'brown', price: 300 },
-  { id: 22, name: 'Craiova', type: 'property', color: 'brown', price: 300 },
-  { id: 23, name: 'Bistrița', type: 'property', color: 'brown', price: 320 },
-  { id: 24, name: 'Tulcea', type: 'property', color: 'pink', price: 340 },
-  { id: 25, name: 'Mangalia', type: 'property', color: 'pink', price: 360 },
-  { id: 26, name: 'Reșița', type: 'property', color: 'pink', price: 380 },
-  { id: 27, name: 'Chance', type: 'chance' },
-  { id: 28, name: 'Vaslui', type: 'property', color: 'cyan', price: 400 },
-  { id: 29, name: 'Focșani', type: 'property', color: 'cyan', price: 420 },
-  { id: 30, name: 'Du-te la închisoare', type: 'jail' },
-  { id: 31, name: 'Slobozia', type: 'property', color: 'lime', price: 440 },
-  { id: 32, name: 'Medgidia', type: 'property', color: 'lime', price: 460 },
-  { id: 33, name: 'Bârlad', type: 'property', color: 'lime', price: 480 },
-  { id: 34, name: 'Suceava', type: 'property', color: 'gray', price: 500 },
-  { id: 35, name: 'Roman', type: 'property', color: 'gray', price: 520 },
-  { id: 36, name: 'Pașcani', type: 'property', color: 'gray', price: 540 },
-  { id: 37, name: 'Târnăveni', type: 'property', color: 'darkred', price: 560 },
-  { id: 38, name: 'Deva', type: 'property', color: 'darkred', price: 580 },
-  { id: 39, name: 'Satu Mare', type: 'property', color: 'darkred', price: 600 },
+  {
+    id: 1,
+    name: '1. Litoral',
+    type: 'property',
+    price: 60,
+    image: '/properties/litoral.png',
+  },
+  { id: 2, name: 'Camping', type: 'camping', color: 'yellow' },
+  {
+    id: 3,
+    name: '2. Mahmudia',
+    type: 'property',
+    price: 100,
+    image: '/properties/mahmudia.png',
+  },
+  { id: 4, name: 'Stație Auto', type: 'statie', color: 'orange' },
+  {
+    id: 5,
+    name: '3. Lacul Sărat',
+    type: 'property',
+    price: 100,
+    image: '/properties/lacul-sarat.png',
+  },
+  {
+    id: 6,
+    name: '4. Soveja',
+    type: 'property',
+    price: 120,
+    image: '/properties/soveja.png',
+  },
+  {
+    id: 7,
+    name: '5. Roman',
+    type: 'property',
+    price: 140,
+    image: '/properties/roman.png',
+  },
+  { id: 8, name: 'Surpriză', type: 'surpriza', color: 'pink' },
+  {
+    id: 9,
+    name: '6. Suceava',
+    type: 'property',
+    price: 140,
+    image: '/properties/suceava.png',
+  },
+  { id: 10, name: 'Parcare', type: 'parcare' },
+  {
+    id: 11,
+    name: 'Semafor',
+    type: 'semafor',
+    color: 'lightblue',
+  },
+  {
+    id: 12,
+    name: '7. Harghita',
+    type: 'property',
+    price: 180,
+    image: '/properties/harghita.png',
+  },
+  {
+    id: 13,
+    name: '8. Maramureș',
+    type: 'property',
+    price: 200,
+    image: '/properties/maramures.png',
+  },
+  {
+    id: 14,
+    name: 'CFR',
+    type: 'cfr',
+    color: 'green',
+    price: 220,
+  },
+  {
+    id: 15,
+    name: '9. Munții Apuseni',
+    type: 'property',
+    price: 240,
+    image: '/properties/apuseni.png',
+  },
+  {
+    id: 16,
+    name: '10. Lipova',
+    type: 'property',
+    price: 260,
+    image: '/properties/lipova.png',
+  },
+  {
+    id: 17,
+    name: 'Surpriză',
+    type: 'surpriza',
+    color: 'pink',
+  },
+  {
+    id: 18,
+    name: '11. Buziaș',
+    type: 'property',
+    price: 280,
+    image: '/properties/buzias.png',
+  },
+  {
+    id: 19,
+    name: '12. Băile Herculane',
+    type: 'property',
+    price: 280,
+    image: '/properties/herculane.png',
+  },
+  { id: 20, name: 'Grădina Botanică', type: 'gradina' },
+  {
+    id: 21,
+    name: 'Stație Auto',
+    type: 'statie',
+    color: 'orange',
+  },
+  {
+    id: 22,
+    name: '13. Porțile Fier',
+    type: 'property',
+    price: 300,
+    image: '/properties/porti-fier.png',
+  },
+  {
+    id: 23,
+    name: '14. Tărgu Jiu',
+    type: 'property',
+    price: 300,
+    image: '/properties/tg-jiu.png',
+  },
+  {
+    id: 24,
+    name: '15. Horezu',
+    type: 'property',
+    price: 320,
+    image: '/properties/horezu.png',
+  },
+  {
+    id: 25,
+    name: '16. Călimănești',
+    type: 'property',
+    price: 340,
+    image: '/properties/calimanesti.png',
+  },
+  {
+    id: 26,
+    name: 'Surpriză',
+    type: 'surpriza',
+    color: 'pink',
+  },
+  {
+    id: 27,
+    name: '17. Curtea de Argeș',
+    type: 'property',
+    price: 380,
+    image: '/properties/arges.png',
+  },
+  {
+    id: 28,
+    name: '18. Munții Făgăraș',
+    type: 'property',
+    price: 400,
+    image: '/properties/fagaras.png',
+  },
+  {
+    id: 29,
+    name: '19. Poiana Brașov',
+    type: 'property',
+    price: 420,
+    image: '/properties/poiana-brasov.png',
+  },
+  { id: 30, name: 'Hanul Morilor', type: 'han' },
+  {
+    id: 31,
+    name: '20. Bran',
+    type: 'property',
+    price: 440,
+    image: '/properties/bran.png',
+  },
+  {
+    id: 32,
+    name: 'Pod',
+    type: 'pod',
+    color: 'lightblue',
+  },
+  {
+    id: 33,
+    name: '21. Sinaia',
+    type: 'property',
+    price: 480,
+    image: '/properties/sinaia.png',
+  },
+  {
+    id: 34,
+    name: 'Surpriză',
+    type: 'surpriza',
+    color: 'pink',
+  },
+  {
+    id: 35,
+    name: '22. Cheia',
+    type: 'property',
+    price: 520,
+    image: '/properties/cheia.png',
+  },
+  {
+    id: 36,
+    name: '23. Sărata Monteoru',
+    type: 'property',
+    price: 540,
+    image: '/properties/sarata-monteoru.png',
+  },
+  {
+    id: 37,
+    name: 'CFR',
+    type: 'cfr',
+    color: 'green',
+  },
+  {
+    id: 38,
+    name: '24. Snagov',
+    type: 'property',
+    price: 560,
+    image: '/properties/snagov.png',
+  },
+  {
+    id: 39,
+    name: '25. București',
+    type: 'property',
+    price: 580,
+    image: '/properties/bucuresti.png',
+  },
 ];

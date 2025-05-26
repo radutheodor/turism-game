@@ -7,7 +7,7 @@ interface DiceProps {
 
 const Dice: React.FC<DiceProps> = ({ onRollComplete, disabled }) => {
   const [rolling, setRolling] = useState(false);
-  const [value, setValue] = useState(1);
+  const [values, setValues] = useState<[number, number]>([1, 1]);
 
   const rollDice = () => {
     if (rolling || disabled) return;
@@ -15,25 +15,34 @@ const Dice: React.FC<DiceProps> = ({ onRollComplete, disabled }) => {
     setRolling(true);
 
     const interval = setInterval(() => {
-      setValue(Math.floor(Math.random() * 6) + 1);
+      setValues([Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1]);
     }, 100);
 
     setTimeout(() => {
       clearInterval(interval);
-      const result = Math.floor(Math.random() * 6) + 1;
-      setValue(result);
+      const final1 = Math.floor(Math.random() * 6) + 1;
+      const final2 = Math.floor(Math.random() * 6) + 1;
+      setValues([final1, final2]);
       setRolling(false);
-      onRollComplete(result);
+      onRollComplete(final1 + final2);
     }, 1000);
   };
 
   return (
-    <div className="flex flex-col items-center space-y-2">
-      <img
-        src={`./dice${value}.svg`}
-        alt={`dice ${value}`}
-        className={`w-16 h-16 transition-transform duration-500 ${rolling ? 'rotate-180 scale-125' : ''}`}
-      />
+    <div className="flex flex-col items-center gap-4">
+      {/* Dice row */}
+      <div className="flex flex-row justify-center items-center gap-8">
+        {values.map((val, idx) => (
+          <img
+            key={idx}
+            src={`/dice${val}.svg`}
+            alt={`Dice ${val}`}
+            className={`w-16 h-16 transition-transform duration-500 ${rolling ? 'rotate-180 scale-125' : ''}`}
+          />
+        ))}
+      </div>
+
+      {/* Button */}
       <button
         onClick={rollDice}
         disabled={disabled || rolling}
