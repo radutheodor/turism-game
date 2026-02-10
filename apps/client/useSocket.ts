@@ -13,10 +13,15 @@ export function useSocket() {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    const socket: TypedSocket = io(BACKEND_URL);
+    console.log('[Turism] Connecting to:', BACKEND_URL);
+    const socket: TypedSocket = io(BACKEND_URL, {
+      transports: ['websocket', 'polling'],
+      withCredentials: false,
+    });
     socketRef.current = socket;
-    socket.on('connect', () => setConnected(true));
-    socket.on('disconnect', () => setConnected(false));
+    socket.on('connect', () => { console.log('[Turism] Connected:', socket.id); setConnected(true); });
+    socket.on('disconnect', () => { console.log('[Turism] Disconnected'); setConnected(false); });
+    socket.on('connect_error', (err) => { console.error('[Turism] Connection error:', err.message); setError(`Connection failed: ${err.message}`); });
     socket.on('gameState', (s) => { setGameState(s); setError(null); });
     socket.on('roomCreated', (id) => setRoomId(id));
     socket.on('error', (msg) => { setError(msg); setTimeout(() => setError(null), 3000); });

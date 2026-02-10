@@ -1,175 +1,120 @@
-:root {
-  --cell: 68px;
-  --corner: 100px;
-  --band-w: 12px;
-  --board-bg: #e8e4d4;
-}
+:root { --c: 60px; }
 
-.board-wrapper {
-  display: inline-block;
-}
+.board-outer { display: inline-block; }
 
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(13, var(--cell));
-  grid-template-rows: repeat(13, var(--cell));
+  grid-template-columns: repeat(13, var(--c));
+  grid-template-rows: repeat(13, var(--c));
   position: relative;
-  background: var(--board-bg);
-  border-radius: 10px;
+  background: #e8e4d4;
   border: 3px solid #8b7d6b;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 0 80px rgba(0,0,0,0.06);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 0 80px rgba(0,0,0,0.05);
 }
 
-/* ─── Tiles ─────────────────────────────────────────────────── */
+/* ─── Tile ─────────────────────────────────────────────────── */
 .tile {
   position: relative;
   border: 1px solid #c4b99a;
-  overflow: hidden;
   background: #faf8f2;
+  overflow: hidden;
+  cursor: pointer;
   transition: box-shadow 0.15s;
-  display: flex;
-  flex-direction: column;
 }
 .tile:hover { box-shadow: inset 0 0 0 2px #10b981; z-index: 10; }
-.tile.vertical { flex-direction: row; }
-.tile.mortgaged { opacity: 0.55; }
+.tile-corner { background: #f0ece0; }
+.tile-mortgaged { opacity: 0.5; }
 
-/* ─── Color bands ───────────────────────────────────────────── */
+/* ─── Color bands ──────────────────────────────────────────── */
 .band { position: absolute; z-index: 2; }
-.band-t { top: 0; left: 0; right: 0; height: var(--band-w); }
-.band-b { bottom: 0; left: 0; right: 0; height: var(--band-w); }
-.band-l { top: 0; left: 0; bottom: 0; width: var(--band-w); }
-.band-r { top: 0; right: 0; bottom: 0; width: var(--band-w); }
+.band-t { top: 0; left: 0; right: 0; height: 10px; }
+.band-b { bottom: 0; left: 0; right: 0; height: 10px; }
+.band-l { top: 0; left: 0; bottom: 0; width: 10px; }
+.band-r { top: 0; right: 0; bottom: 0; width: 10px; }
 
-/* ─── Tile body ─────────────────────────────────────────────── */
-.tile-body {
-  flex: 1;
+/* ─── Tile inner content ───────────────────────────────────── */
+.tile-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2px;
+  width: 100%;
+  height: 100%;
   gap: 1px;
-  min-width: 0;
-  min-height: 0;
-  z-index: 1;
 }
-.corner-body { padding: 6px; }
-.tile-icon { font-size: 18px; line-height: 1; }
-.corner .tile-icon { font-size: 26px; }
-.tile-label {
-  font-size: 7px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1.15;
-  color: #3f3a2f;
-  max-width: 100%;
-  overflow: hidden;
-  word-break: break-word;
-}
-.label-vert {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-.corner .tile-label { font-size: 9px; }
-.tile-price { font-size: 6.5px; color: #888; font-weight: 600; }
-.price-vert { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 6px; }
+.inner-corner { flex-direction: column; padding: 4px; }
+.inner-horiz  { flex-direction: column; padding: 2px 1px; }
+.inner-vert   { flex-direction: row; padding: 1px 2px; }
 
-/* ─── Houses & Hotel ────────────────────────────────────────── */
-.houses {
-  position: absolute;
-  z-index: 3;
-  display: flex;
-  gap: 0;
-}
-.houses-h { top: 1px; left: 50%; transform: translateX(-50%); flex-direction: row; }
-.houses-v { left: 1px; top: 50%; transform: translateY(-50%); flex-direction: column; }
-.house-pip { font-size: 8px; line-height: 1; }
-.hotel-pip { font-size: 11px; line-height: 1; }
+.tile-icon { font-size: 22px; line-height: 1; }
+.icon-corner { font-size: 32px; }
+.tile-txt { font-size: 8px; font-weight: 700; text-align: center; color: #3f3a2f; line-height: 1.1; }
+.tile-price { font-size: 7px; color: #888; font-weight: 600; }
 
-/* ─── Owner badge ───────────────────────────────────────────── */
-.owner-badge {
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  z-index: 4;
-  font-size: 10px;
-  line-height: 1;
-  background: rgba(255,255,255,0.8);
-  border-radius: 3px;
-  padding: 0 1px;
-}
+/* ─── House pips ───────────────────────────────────────────── */
+.house-row { position: absolute; z-index: 3; display: flex; gap: 0; }
+.hr-horiz { top: 0; left: 50%; transform: translateX(-50%); }
+.hr-vert  { left: 0; top: 50%; transform: translateY(-50%); flex-direction: column; }
+.hp { font-size: 8px; line-height: 1; }
+.hp-hotel { font-size: 10px; }
 
-/* ─── Tokens ────────────────────────────────────────────────── */
-.tokens {
+/* ─── Ownership bar ────────────────────────────────────────── */
+.own-bar {
+  position: absolute; z-index: 4;
+  bottom: 0; left: 0; right: 0; height: 11px;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0.85;
+}
+.own-dot { font-size: 8px; line-height: 1; }
+
+/* ─── Player tokens ────────────────────────────────────────── */
+.tkns {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
+  display: flex; flex-wrap: wrap; gap: 0;
   justify-content: center;
-  z-index: 5;
-  pointer-events: none;
+  z-index: 5; pointer-events: none;
 }
-.token {
-  font-size: 20px;
-  line-height: 1;
+.tkn {
+  font-size: 20px; line-height: 1;
   filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
 }
 
-/* ─── Mortgage overlay ──────────────────────────────────────── */
-.mortgage-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: 900;
-  color: rgba(220, 38, 38, 0.4);
-  z-index: 3;
-  pointer-events: none;
+/* ─── Mortgage overlay ─────────────────────────────────────── */
+.mort-x {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 900;
+  color: rgba(220,38,38,0.3);
+  z-index: 3; pointer-events: none;
 }
 
-/* ─── Center board label ────────────────────────────────────── */
+/* ─── Board center ─────────────────────────────────────────── */
 .board-center {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
-.center-title { font-size: 48px; }
-.center-name {
-  font-size: 32px;
-  font-weight: 900;
-  color: #5c4a2e;
-  letter-spacing: 6px;
+.bc-dice { font-size: 48px; }
+.bc-title {
+  font-size: 32px; font-weight: 900; color: #5c4a2e;
+  letter-spacing: 6px; font-family: Georgia, serif;
   text-shadow: 1px 1px 0 rgba(255,255,255,0.6);
-  font-family: Georgia, serif;
 }
-.center-sub {
-  font-size: 13px;
-  color: #8b7d6b;
-  letter-spacing: 4px;
-  font-weight: 600;
-}
+.bc-sub { font-size: 13px; color: #8b7d6b; letter-spacing: 4px; font-weight: 600; }
 
-/* ─── Responsive ────────────────────────────────────────────── */
+/* ─── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  :root {
-    --cell: 54px;
-    --corner: 80px;
-    --band-w: 9px;
-  }
-  .tile-icon { font-size: 15px; }
-  .corner .tile-icon { font-size: 20px; }
-  .tile-label { font-size: 6px; }
-  .token { font-size: 16px; }
-  .center-name { font-size: 24px; }
-  .center-title { font-size: 36px; }
+  :root { --c: 48px; }
+  .tile-icon { font-size: 18px; }
+  .icon-corner { font-size: 24px; }
+  .tile-txt { font-size: 7px; }
+  .tkn { font-size: 16px; }
+  .bc-title { font-size: 24px; }
+  .bc-dice { font-size: 36px; }
 }

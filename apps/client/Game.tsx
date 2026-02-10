@@ -4,6 +4,7 @@ import { tiles, groupColors, propertyGroups } from '@turism/shared';
 import Board from './Board';
 import Dice3D from './Dice3D';
 import GameLog from './GameLog';
+import PropertyCard from './PropertyCard';
 
 interface GameProps {
   gameState: GameState;
@@ -26,6 +27,7 @@ export default function Game({
   onBuildHouse, onSellHouse, onMortgage, onUnmortgage, onPayJailFine, onUseJailCard, error,
 }: GameProps) {
   const [showPropMgr, setShowPropMgr] = useState(false);
+  const [selectedTile, setSelectedTile] = useState<number | null>(null);
   const cur = gameState.players[gameState.currentPlayerIndex];
   const isMyTurn = cur?.id === myId;
   const me = gameState.players.find(p => p.id === myId);
@@ -62,9 +64,20 @@ export default function Game({
       )}
 
       <div className="flex-1 flex flex-col lg:flex-row gap-4 p-3 overflow-auto">
+        {/* Property card (left side, shown on tile click) */}
+        {selectedTile !== null && (
+          <div className="flex-shrink-0">
+            <PropertyCard tileId={selectedTile} gameState={gameState} onClose={() => setSelectedTile(null)} />
+          </div>
+        )}
+
         {/* Board */}
         <div className="flex-1 flex justify-center items-start overflow-auto">
-          <Board players={gameState.players} ownedProperties={gameState.ownedProperties} />
+          <Board
+            players={gameState.players}
+            ownedProperties={gameState.ownedProperties}
+            onTileClick={(id) => setSelectedTile(selectedTile === id ? null : id)}
+          />
         </div>
 
         {/* Right panel */}
