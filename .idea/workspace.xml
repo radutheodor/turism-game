@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca577632-9c55-4be5-9ffd-e6b143f9f5cb" name="Changes" comment="THE-15 Resolve relative paths">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/Board.css" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/Board.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/Board.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/Board.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/Dice.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/Game.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/useSocket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/useSocket.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server/GameRoom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server/GameRoom.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/shared/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/tiles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/shared/tiles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/shared/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="ca577632-9c55-4be5-9ffd-e6b143f9f5cb" name="Changes" comment="THE-15 Resolve relative paths" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +18,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="THE-14-Fix-Render-deploy" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,20 +53,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;THE-15-Resolve-relative-paths&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/smotocel/Work/GitHub/turism-game-production&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "THE-17-Board-improvements",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/smotocel/Work/GitHub/turism-game-production",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
