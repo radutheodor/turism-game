@@ -1,2 +1,2 @@
 export * from './types';
-export { tiles } from './tiles';
+export { tiles, propertyGroups, groupColors, surpriseCards } from './tiles';
