@@ -1,215 +1,175 @@
 :root {
-  --tile-size: 64px;
-  --corner-size: 96px;
-  --band-width: 10px;
+  --cell: 68px;
+  --corner: 100px;
+  --band-w: 12px;
+  --board-bg: #e8e4d4;
+}
+
+.board-wrapper {
+  display: inline-block;
 }
 
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(13, var(--tile-size));
-  grid-template-rows: repeat(13, var(--tile-size));
-  margin: auto;
+  grid-template-columns: repeat(13, var(--cell));
+  grid-template-rows: repeat(13, var(--cell));
   position: relative;
-  background:
-    radial-gradient(ellipse at center, #e8e6d9 0%, #d5d2c3 100%);
-  border-radius: 8px;
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.2),
-    inset 0 0 60px rgba(0, 0, 0, 0.05);
-  padding: 2px;
+  background: var(--board-bg);
+  border-radius: 10px;
+  border: 3px solid #8b7d6b;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 0 80px rgba(0,0,0,0.06);
 }
 
-/* ─── Tile base ─────────────────────────────────────────────── */
-
+/* ─── Tiles ─────────────────────────────────────────────────── */
 .tile {
   position: relative;
-  border: 1px solid #bbb;
+  border: 1px solid #c4b99a;
   overflow: hidden;
-  background: #f5f5f0;
-  transition: box-shadow 0.15s, z-index 0s;
-  cursor: default;
-}
-
-.tile:hover {
-  box-shadow: inset 0 0 0 2px rgba(16, 185, 129, 0.5);
-  z-index: 10;
-}
-
-/* ─── Color band (property group indicator) ─────────────────── */
-
-.color-band {
-  position: absolute;
-  z-index: 2;
-}
-
-.band-top {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--band-width);
-}
-
-.band-bottom {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: var(--band-width);
-}
-
-.band-left {
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: var(--band-width);
-}
-
-.band-right {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--band-width);
-}
-
-/* ─── Ownership indicator ───────────────────────────────────── */
-
-.ownership-indicator {
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  z-index: 5;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 3px;
-  padding: 0 1px;
-  line-height: 1;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.owner-avatar {
-  font-size: 10px;
-}
-
-/* ─── Tile content area ─────────────────────────────────────── */
-
-.tile-content {
+  background: #faf8f2;
+  transition: box-shadow 0.15s;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+}
+.tile:hover { box-shadow: inset 0 0 0 2px #10b981; z-index: 10; }
+.tile.vertical { flex-direction: row; }
+.tile.mortgaged { opacity: 0.55; }
+
+/* ─── Color bands ───────────────────────────────────────────── */
+.band { position: absolute; z-index: 2; }
+.band-t { top: 0; left: 0; right: 0; height: var(--band-w); }
+.band-b { bottom: 0; left: 0; right: 0; height: var(--band-w); }
+.band-l { top: 0; left: 0; bottom: 0; width: var(--band-w); }
+.band-r { top: 0; right: 0; bottom: 0; width: var(--band-w); }
+
+/* ─── Tile body ─────────────────────────────────────────────── */
+.tile-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1px;
   padding: 2px;
-}
-
-.tile-content.vertical {
-  flex-direction: row;
-}
-
-.tile-content.corner {
-  padding: 4px;
-}
-
-/* ─── Tile image ────────────────────────────────────────────── */
-
-.tile-image-wrapper {
-  flex: 1;
-  min-height: 0;
+  gap: 1px;
   min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  width: 100%;
+  min-height: 0;
+  z-index: 1;
 }
-
-.tile-content.vertical .tile-image-wrapper {
-  height: 100%;
-  width: auto;
-  flex: 1;
-}
-
-.tile-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 2px;
-}
-
-/* ─── Labels ────────────────────────────────────────────────── */
-
+.corner-body { padding: 6px; }
+.tile-icon { font-size: 18px; line-height: 1; }
+.corner .tile-icon { font-size: 26px; }
 .tile-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  flex-shrink: 0;
-}
-
-.tile-label.label-vertical {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  flex-direction: row;
-  gap: 2px;
-}
-
-.tile-name {
-  font-size: 6.5px;
+  font-size: 7px;
   font-weight: 700;
   text-align: center;
   line-height: 1.15;
-  color: #333;
+  color: #3f3a2f;
   max-width: 100%;
   overflow: hidden;
+  word-break: break-word;
+}
+.label-vert {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.corner .tile-label { font-size: 9px; }
+.tile-price { font-size: 6.5px; color: #888; font-weight: 600; }
+.price-vert { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 6px; }
+
+/* ─── Houses & Hotel ────────────────────────────────────────── */
+.houses {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  gap: 0;
+}
+.houses-h { top: 1px; left: 50%; transform: translateX(-50%); flex-direction: row; }
+.houses-v { left: 1px; top: 50%; transform: translateY(-50%); flex-direction: column; }
+.house-pip { font-size: 8px; line-height: 1; }
+.hotel-pip { font-size: 11px; line-height: 1; }
+
+/* ─── Owner badge ───────────────────────────────────────────── */
+.owner-badge {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  z-index: 4;
+  font-size: 10px;
+  line-height: 1;
+  background: rgba(255,255,255,0.8);
+  border-radius: 3px;
+  padding: 0 1px;
 }
 
-.tile-price {
-  font-size: 6px;
-  color: #777;
-  font-weight: 600;
-}
-
-/* ─── Player tokens ─────────────────────────────────────────── */
-
-.tile-tokens {
+/* ─── Tokens ────────────────────────────────────────────────── */
+.tokens {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-wrap: wrap;
-  gap: 0px;
+  gap: 0;
   justify-content: center;
-  align-items: center;
-  z-index: 4;
+  z-index: 5;
   pointer-events: none;
-  max-width: 90%;
 }
-
 .token {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-  transition: transform 0.3s ease;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
 }
 
-/* ─── Responsive: slightly smaller on smaller screens ────────── */
+/* ─── Mortgage overlay ──────────────────────────────────────── */
+.mortgage-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: rgba(220, 38, 38, 0.4);
+  z-index: 3;
+  pointer-events: none;
+}
 
-@media (max-width: 1024px) {
+/* ─── Center board label ────────────────────────────────────── */
+.board-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 0;
+}
+.center-title { font-size: 48px; }
+.center-name {
+  font-size: 32px;
+  font-weight: 900;
+  color: #5c4a2e;
+  letter-spacing: 6px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.6);
+  font-family: Georgia, serif;
+}
+.center-sub {
+  font-size: 13px;
+  color: #8b7d6b;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 1100px) {
   :root {
-    --tile-size: 52px;
-    --corner-size: 78px;
-    --band-width: 8px;
+    --cell: 54px;
+    --corner: 80px;
+    --band-w: 9px;
   }
-
-  .tile-name {
-    font-size: 5.5px;
-  }
-
-  .tile-price {
-    font-size: 5px;
-  }
-
-  .token {
-    font-size: 14px;
-  }
+  .tile-icon { font-size: 15px; }
+  .corner .tile-icon { font-size: 20px; }
+  .tile-label { font-size: 6px; }
+  .token { font-size: 16px; }
+  .center-name { font-size: 24px; }
+  .center-title { font-size: 36px; }
 }

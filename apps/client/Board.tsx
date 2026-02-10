@@ -1,6 +1,6 @@
 import React from 'react';
 import './Board.css';
-import { tiles } from '@turism/shared';
+import { tiles, groupColors } from '@turism/shared';
 import type { Player, OwnedProperty } from '@turism/shared';
 import { tileLayout } from './tileLayout';
 
@@ -9,108 +9,110 @@ interface BoardProps {
   ownedProperties: OwnedProperty[];
 }
 
-// Color mapping for tile groups (property color bands)
-const groupColors: Record<string, string> = {
-  A: '#8B4513', // brown
-  B: '#87CEEB', // light blue
-  C: '#FF69B4', // pink
-  D: '#FFA500', // orange
-  E: '#FF0000', // red
-  F: '#FFD700', // yellow
-  G: '#228B22', // green
-  H: '#0000CD', // dark blue
-  I: '#8A2BE2', // purple
-  J: '#20B2AA', // teal
-  K: '#DC143C', // crimson
-  L: '#4B0082', // indigo
-};
-
-// Tile type background colors
-const typeColors: Record<string, string> = {
-  start: '#90EE90',
-  parcare: '#FFE4B5',
-  gradina: '#98FB98',
-  han: '#DEB887',
-  surpriza: '#FFB6C1',
-  camping: '#FFFACD',
-  statie: '#FFA07A',
-  cfr: '#90EE90',
-  semafor: '#ADD8E6',
-  pod: '#B0C4DE',
+const typeIcons: Record<string, string> = {
+  start: '🏁', parcare: '🅿️', gradina: '🌺', han: '🏚️',
+  surpriza: '❓', camping: '⛺', statie: '🚌', cfr: '🚂',
+  semafor: '🚦', pod: '🌉',
 };
 
 export default function Board({ players, ownedProperties }: BoardProps) {
   return (
-    <div className="board-grid">
-      {tiles.map((tile) => {
-        const layout = tileLayout.find((t) => t.id === tile.id);
-        if (!layout) return null;
+    <div className="board-wrapper">
+      <div className="board-grid">
+        {tiles.map((tile) => {
+          const layout = tileLayout.find(t => t.id === tile.id);
+          if (!layout) return null;
 
-        const playersOnTile = players.filter((p) => p.position === tile.id && !p.bankrupt);
-        const owned = ownedProperties.find((op) => op.tileId === tile.id);
-        const owner = owned ? players.find((p) => p.id === owned.ownerId) : null;
+          const playersOnTile = players.filter(p => p.position === tile.id && !p.bankrupt);
+          const owned = ownedProperties.find(op => op.tileId === tile.id);
+          const owner = owned ? players.find(p => p.id === owned.ownerId) : null;
 
-        const isCorner = [0, 10, 20, 30].includes(tile.id);
-        const isLeft = tile.id > 10 && tile.id < 20;
-        const isRight = tile.id > 30;
-        const isVertical = isLeft || isRight;
-        const isTop = tile.id > 20 && tile.id < 30;
-        const isBottom = tile.id > 0 && tile.id < 10;
+          const isCorner = [0, 10, 20, 30].includes(tile.id);
+          const isLeft = tile.id > 10 && tile.id < 20;
+          const isRight = tile.id > 30;
+          const isVertical = isLeft || isRight;
+          const isTop = tile.id > 20 && tile.id < 30;
 
-        const groupColor = tile.group ? groupColors[tile.group] : undefined;
-        const bgColor = tile.type !== 'property' ? typeColors[tile.type] || '#f5f5f0' : '#f5f5f0';
+          const groupColor = tile.group ? groupColors[tile.group] : undefined;
+          const icon = tile.icon || typeIcons[tile.type] || '';
 
-        const style: React.CSSProperties = {
-          gridColumnStart: layout.x,
-          gridRowStart: layout.y,
-          width: isCorner ? 'var(--corner-size)' : isVertical ? 'var(--corner-size)' : 'var(--tile-size)',
-          height: isCorner ? 'var(--corner-size)' : isVertical ? 'var(--tile-size)' : 'var(--corner-size)',
-        };
+          // House indicators
+          const houses = owned?.houses || 0;
+          const isMortgaged = owned?.mortgaged || false;
 
-        return (
-          <div key={tile.id} className="tile" style={style} title={`${tile.name}${tile.price ? ` — $${tile.price}` : ''}`}>
-            {/* Color band for property groups */}
-            {groupColor && (
-              <div
-                className={`color-band ${isVertical ? (isLeft ? 'band-right' : 'band-left') : isTop ? 'band-bottom' : 'band-top'}`}
-                style={{ backgroundColor: groupColor }}
-              />
-            )}
+          return (
+            <div
+              key={tile.id}
+              className={`tile ${isCorner ? 'corner' : ''} ${isVertical ? 'vertical' : ''} ${isMortgaged ? 'mortgaged' : ''}`}
+              style={{
+                gridColumnStart: layout.x,
+                gridRowStart: layout.y,
+                ...(isCorner ? { width: 'var(--corner)', height: 'var(--corner)' } :
+                  isVertical ? { width: 'var(--corner)', height: 'var(--cell)' } :
+                  { width: 'var(--cell)', height: 'var(--corner)' }),
+              }}
+              title={`${tile.name}${tile.price ? ` — $${tile.price}` : ''}${owned ? ` (${owner?.name})` : ''}`}
+            >
+              {/* Color band */}
+              {groupColor && (
+                <div
+                  className={`band ${isLeft ? 'band-r' : isRight ? 'band-l' : isTop ? 'band-b' : 'band-t'}`}
+                  style={{ backgroundColor: groupColor }}
+                />
+              )}
 
-            {/* Ownership border indicator */}
-            {owner && (
-              <div className="ownership-indicator">
-                <span className="owner-avatar">{owner.avatar}</span>
-              </div>
-            )}
-
-            {/* Main tile content */}
-            <div className={`tile-content ${isVertical ? 'vertical' : ''} ${isCorner ? 'corner' : ''}`} style={{ backgroundColor: bgColor }}>
-              {tile.image ? (
-                <div className="tile-image-wrapper">
-                  <img src={tile.image} className="tile-image" alt={tile.name} />
+              {/* House pips */}
+              {houses > 0 && houses < 5 && (
+                <div className={`houses ${isVertical ? 'houses-v' : 'houses-h'}`}>
+                  {Array.from({ length: houses }).map((_, i) => (
+                    <span key={i} className="house-pip">🏠</span>
+                  ))}
                 </div>
-              ) : null}
+              )}
+              {houses === 5 && (
+                <div className={`houses ${isVertical ? 'houses-v' : 'houses-h'}`}>
+                  <span className="hotel-pip">🏨</span>
+                </div>
+              )}
 
-              <div className={`tile-label ${isVertical ? 'label-vertical' : ''}`}>
-                <span className="tile-name">{tile.name}</span>
-                {tile.price && <span className="tile-price">${tile.price}</span>}
+              {/* Tile body */}
+              <div className={`tile-body ${isCorner ? 'corner-body' : ''}`}>
+                <span className="tile-icon">{icon}</span>
+                <span className={`tile-label ${isVertical && !isCorner ? 'label-vert' : ''}`}>
+                  {tile.name}
+                </span>
+                {tile.price && !isCorner && (
+                  <span className={`tile-price ${isVertical ? 'price-vert' : ''}`}>${tile.price}</span>
+                )}
               </div>
+
+              {/* Owner badge */}
+              {owner && (
+                <div className="owner-badge">{owner.avatar}</div>
+              )}
+
+              {/* Player tokens */}
+              {playersOnTile.length > 0 && (
+                <div className="tokens">
+                  {playersOnTile.map(p => (
+                    <span key={p.id} className="token" title={p.name}>{p.avatar}</span>
+                  ))}
+                </div>
+              )}
+
+              {/* Mortgage overlay */}
+              {isMortgaged && <div className="mortgage-overlay">M</div>}
             </div>
+          );
+        })}
 
-            {/* Player tokens */}
-            {playersOnTile.length > 0 && (
-              <div className="tile-tokens">
-                {playersOnTile.map((p) => (
-                  <span key={p.id} className="token" title={p.name}>
-                    {p.avatar}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
+        {/* Center logo */}
+        <div className="board-center">
+          <div className="center-title">🎲</div>
+          <div className="center-name">TURISM</div>
+          <div className="center-sub">România</div>
+        </div>
+      </div>
     </div>
   );
 }
