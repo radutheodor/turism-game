@@ -1,0 +1,15 @@
+{
+  "name": "turism-monopoly",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:client": "pnpm --filter client dev",
+    "dev:server": "pnpm --filter server dev",
+    "dev": "pnpm dev:server & pnpm dev:client",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  }
+}

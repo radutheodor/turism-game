@@ -1,0 +1,215 @@
+:root {
+  --tile-size: 64px;
+  --corner-size: 96px;
+  --band-width: 10px;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(13, var(--tile-size));
+  grid-template-rows: repeat(13, var(--tile-size));
+  margin: auto;
+  position: relative;
+  background:
+    radial-gradient(ellipse at center, #e8e6d9 0%, #d5d2c3 100%);
+  border-radius: 8px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.2),
+    inset 0 0 60px rgba(0, 0, 0, 0.05);
+  padding: 2px;
+}
+
+/* ─── Tile base ─────────────────────────────────────────────── */
+
+.tile {
+  position: relative;
+  border: 1px solid #bbb;
+  overflow: hidden;
+  background: #f5f5f0;
+  transition: box-shadow 0.15s, z-index 0s;
+  cursor: default;
+}
+
+.tile:hover {
+  box-shadow: inset 0 0 0 2px rgba(16, 185, 129, 0.5);
+  z-index: 10;
+}
+
+/* ─── Color band (property group indicator) ─────────────────── */
+
+.color-band {
+  position: absolute;
+  z-index: 2;
+}
+
+.band-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--band-width);
+}
+
+.band-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--band-width);
+}
+
+.band-left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--band-width);
+}
+
+.band-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--band-width);
+}
+
+/* ─── Ownership indicator ───────────────────────────────────── */
+
+.ownership-indicator {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 3px;
+  padding: 0 1px;
+  line-height: 1;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.owner-avatar {
+  font-size: 10px;
+}
+
+/* ─── Tile content area ─────────────────────────────────────── */
+
+.tile-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 2px;
+}
+
+.tile-content.vertical {
+  flex-direction: row;
+}
+
+.tile-content.corner {
+  padding: 4px;
+}
+
+/* ─── Tile image ────────────────────────────────────────────── */
+
+.tile-image-wrapper {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.tile-content.vertical .tile-image-wrapper {
+  height: 100%;
+  width: auto;
+  flex: 1;
+}
+
+.tile-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+/* ─── Labels ────────────────────────────────────────────────── */
+
+.tile-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.tile-label.label-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  flex-direction: row;
+  gap: 2px;
+}
+
+.tile-name {
+  font-size: 6.5px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  color: #333;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.tile-price {
+  font-size: 6px;
+  color: #777;
+  font-weight: 600;
+}
+
+/* ─── Player tokens ─────────────────────────────────────────── */
+
+.tile-tokens {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0px;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  pointer-events: none;
+  max-width: 90%;
+}
+
+.token {
+  font-size: 18px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  transition: transform 0.3s ease;
+}
+
+/* ─── Responsive: slightly smaller on smaller screens ────────── */
+
+@media (max-width: 1024px) {
+  :root {
+    --tile-size: 52px;
+    --corner-size: 78px;
+    --band-width: 8px;
+  }
+
+  .tile-name {
+    font-size: 5.5px;
+  }
+
+  .tile-price {
+    font-size: 5px;
+  }
+
+  .token {
+    font-size: 14px;
+  }
+}

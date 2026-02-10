@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: turism-server
+    env: node
+    plan: free
+    rootDir: apps/server
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: PORT
+        value: 3001
