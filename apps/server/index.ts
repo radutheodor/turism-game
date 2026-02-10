@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import type { ServerToClientEvents, ClientToServerEvents } from '@turism/shared';
+import type { ServerToClientEvents, ClientToServerEvents } from '../../packages/shared';
 import { GameRoom } from './GameRoom';
 
 const app = express();

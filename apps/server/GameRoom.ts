@@ -8,8 +8,8 @@ import {
   BOARD_SIZE,
   MAX_PLAYERS,
   MIN_PLAYERS,
-} from '@turism/shared';
-import { tiles } from '@turism/shared';
+} from '../../packages/shared';
+import { tiles } from '../../packages/shared';
 
 export class GameRoom {
   state: GameState;
